@@ -8,8 +8,17 @@ namespace SecurityLab1_Starter.Controllers
 {
     public class InventoryController : Controller
     {
-        // GET: Inventory
-        public ActionResult Index()
+		protected override void OnActionExecuted(ActionExecutedContext filterContext) {
+            filterContext.ExceptionHandled = true;
+
+            //Log the error!!
+            Console.WriteLine(filterContext.Exception);
+            //Redirect or return a view, but not both.
+            filterContext.Result = RedirectToAction("ServerError", "Error");
+        }
+
+		// GET: Inventory
+		public ActionResult Index()
         {
             return View();
         }
